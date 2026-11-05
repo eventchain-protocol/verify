@@ -1,5 +1,6 @@
 # The command-line verifier in a container, for hosts without Node.
-#   docker run --rm -v "$PWD:/data:ro" ghcr.io/eventchain-protocol/verify aof /data/history.jsonl
+#   docker build -t eventchain-verify-ts https://github.com/eventchain-protocol/verify.git
+#   docker run --rm -v "$PWD:/data:ro" eventchain-verify-ts aof /data/history.jsonl
 FROM node:22-slim AS build
 WORKDIR /src
 COPY package.json package-lock.json ./

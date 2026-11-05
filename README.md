@@ -26,8 +26,19 @@ make; save the page and it works from disk.
 
 ## Command line
 
+The package is not on npm yet, so run it from a clone:
+
 ```sh
-npx @eventchain-protocol/verify aof history.jsonl
+git clone https://github.com/eventchain-protocol/verify && cd verify
+npm ci && npm run build
+node dist/cli.js aof history.jsonl
+```
+
+Or in Docker, without Node:
+
+```sh
+docker build -t eventchain-verify-ts https://github.com/eventchain-protocol/verify.git
+docker run --rm -v "$PWD:/data:ro" eventchain-verify-ts aof /data/history.jsonl
 ```
 
 ```text
