@@ -1,0 +1,43 @@
+{
+  "name": "@eventchain-protocol/verify",
+  "version": "0.1.0",
+  "description": "Independent verifier for EventChain append-only files and Hub heartbeats. Runs in Node and in browsers, offline.",
+  "license": "BSD-3-Clause",
+  "repository": "github:eventchain-protocol/verify",
+  "homepage": "https://eventchain-protocol.github.io/verify/",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "eventchain-verify-ts": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node --test --test-reporter=dot test/vectors.test.mjs",
+    "site": "tsc -p site/tsconfig.json && node site/build.mjs",
+    "prepublishOnly": "npm test"
+  },
+  "dependencies": {
+    "@noble/curves": "2.4.0",
+    "@noble/hashes": "2.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.6",
+    "esbuild": "0.28.2",
+    "typescript": "7.0.2"
+  }
+}

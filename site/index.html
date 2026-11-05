@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="__CSP__">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>EventChain verifier</title>
+<meta name="description" content="Verify an EventChain append-only file in your browser. Nothing is uploaded.">
+<style>/*STYLE*/</style>
+</head>
+<body>
+<main id="verifier">
+  <header id="verifier-header">
+    <h1>EventChain verifier</h1>
+    <p id="verifier-promise">Checks an append-only file here, in this tab. The page's security policy forbids every network request, so the file cannot leave your machine. Save the page and it works offline.</p>
+  </header>
+
+  <section id="aof-input" aria-labelledby="aof-input-title">
+    <h2 id="aof-input-title">1. The file</h2>
+    <div id="aof-drop" class="drop" tabindex="0" role="button" aria-describedby="aof-drop-hint">
+      <p id="aof-drop-hint">Drop an AOF file here, or</p>
+      <div id="aof-actions" class="actions">
+        <label class="button" for="aof-file">Choose a file</label>
+        <input id="aof-file" class="visually-hidden" type="file">
+        <button id="load-sample" class="button secondary" type="button">Load the sample</button>
+      </div>
+      <p id="aof-name" class="file-name" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <section id="heartbeat-input" aria-labelledby="heartbeat-input-title">
+    <h2 id="heartbeat-input-title">2. A heartbeat <span class="optional">optional</span></h2>
+    <p class="hint">A valid file can still be an old copy or one of two histories. A heartbeat the Hub signed says which entry everyone should hold at a position. It carries no key, so enter the Hub key and topic the parties agreed.</p>
+    <div id="heartbeat-fields" class="fields">
+      <div class="field">
+        <label for="heartbeat-file">Heartbeat JSON (one, or the list a host returns)</label>
+        <input id="heartbeat-file" type="file">
+      </div>
+      <div class="field">
+        <label for="hub-key">Hub key</label>
+        <input id="hub-key" type="text" spellcheck="false" autocomplete="off" placeholder="base64url, 33-byte compressed P-256 key">
+      </div>
+      <div class="field">
+        <label for="topic-id">Topic</label>
+        <input id="topic-id" type="text" spellcheck="false" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="freshness">Freshness window in seconds</label>
+        <input id="freshness" type="text" inputmode="decimal" spellcheck="false" autocomplete="off" placeholder="leave empty to skip the freshness check">
+      </div>
+    </div>
+  </section>
+
+  <section id="report" aria-labelledby="report-title" hidden>
+    <h2 id="report-title">Report</h2>
+    <div id="report-summary" class="summary" aria-live="polite"></div>
+    <div id="heartbeat-report" class="summary" aria-live="polite" hidden></div>
+    <p id="report-note" class="hint" hidden></p>
+    <div id="line-report-scroll" class="table-scroll">
+      <table id="line-report">
+        <thead><tr><th scope="col">Line</th><th scope="col">Outcome</th><th scope="col">Event ID</th><th scope="col">Detail</th></tr></thead>
+        <tbody id="line-report-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer id="verifier-footer">
+    <h2>What this checks, and what it does not</h2>
+    <ul id="verifier-scope">
+      <li>Each line is a well-formed entry, names the hash of the line before it, and carries a signature that verifies under the key on the line. A Mint entry's passkey assertion is checked too.</li>
+      <li>A valid signature shows that a key signed these bytes. Who holds the key, and whether the statement is true, are not in the file.</li>
+      <li>Payloads, key registries and time anchors are not checked here.</li>
+    </ul>
+    <p id="verifier-version">__VERSION__ · written from the <a href="https://eventchain-protocol.github.io/appendix-specification.html" rel="noreferrer">specification appendix</a> · <a href="https://github.com/eventchain-protocol/verify" rel="noreferrer">source</a></p>
+  </footer>
+</main>
+<script>/*SCRIPT*/</script>
+</body>
+</html>
